@@ -10,11 +10,11 @@ public class BookStore {
     private String bookList = "";
 
 
-    public String printBookList(String jsonbooklist){
+    public String printBookList(String jsonbooklist) {
         JSONArray jsonArray = JSONArray.fromObject(jsonbooklist);
-        for (int i=0; i<jsonArray.size(); i++){
+        for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            bookList += jsonObject.get("book_name");
+            bookList += jsonObject.get("book_name") + "|" + jsonObject.get("Author") + "|" + jsonObject.get("Time");
             bookList += "\n";
         }
         return bookList;
