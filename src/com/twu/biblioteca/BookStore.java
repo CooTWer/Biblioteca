@@ -19,4 +19,8 @@ public class BookStore {
         }
         return bookList;
     }
+
+    public String menu(){
+        return "[List Books]\t[Recent History]\t[Sign in]\t[Quit]";
+    }
 }

@@ -21,4 +21,9 @@ public class BookStoreTest {
     public void printBookListWithMultiData() {
         assertEquals("book1|ZhangSan|2015-06-06\nbook2|LiSi|2016-11-15\n", bookStore.printBookList(jsonStringMulti));
     }
+
+    @Test
+    public void menu(){
+        assertEquals("[List Books]\t[Recent History]\t[Sign in]\t[Quit]",bookStore.menu());
+    }
 }
