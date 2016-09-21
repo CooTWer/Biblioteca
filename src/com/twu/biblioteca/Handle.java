@@ -5,8 +5,9 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
-public class handle {
+public class Handle {
     public static String jsonBookList = "";
 
     public static String readJsonFile(String jsonAddress) {
@@ -32,5 +33,10 @@ public class handle {
             }
         }
         return jsonBookList;
+    }
+
+    public static String getConsoleMessage(){
+        Scanner scanner = new Scanner(System.in);
+        return scanner.next();
     }
 }
