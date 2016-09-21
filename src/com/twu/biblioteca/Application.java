@@ -7,10 +7,16 @@ public class Application {
 
 
     public static void main(String args[]){
-        BookStore bookStore = new BookStore();
         Welcome welcome = new Welcome();
         System.out.println(welcome.SayWelcome());
-        System.out.println(bookStore.menu());
-        System.out.println(bookStore.handleInputMessage(getConsoleMessage()));
+        BookStore bookStore = new BookStore();
+        System.out.println(bookStore.displayMenu());
+        String str = getConsoleMessage();
+        while (!str.equals("Quit")){
+            String str2 = bookStore.handleInputMessage(str);
+            System.out.println(str2);
+            System.out.println(bookStore.displayMenu());
+            str = getConsoleMessage();
+        }
     }
 }

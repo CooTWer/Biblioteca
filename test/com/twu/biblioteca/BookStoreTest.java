@@ -8,26 +8,18 @@ import static org.junit.Assert.*;
 public class BookStoreTest {
     private BookStore bookStore = new BookStore();
 
-    private String jsonStringSingle = "[  {    \"book_name\": \"book1\",  \"Author\": \"ZhangSan\",\"Time\": \"2015-06-06\"} ]";
-    private String jsonStringMulti = "[  {    \"book_name\": \"book1\",  \"Author\": \"ZhangSan\",\"Time\": \"2015-06-06\"  },  {    \"book_name\": \"book2\",  \"Author\": \"LiSi\",\"Time\": \"2016-11-15\"  }]";
-
-
-    @Test
-    public void printBookListWithSingleData() {
-        assertEquals("book1|ZhangSan|2015-06-06\n", bookStore.printBookList(jsonStringSingle));
-    }
 
     @Test
     public void printBookListWithMultiData() {
-        String expect = "book1|ZhangSan|2015-06-06\nbook2|LiSi|2016-11-15\n";
-        String actual = bookStore.printBookList(jsonStringMulti);
+        String expect = "book1|ZhangSan|2015-04-06\nbook2|LiSi|2012-02-01\nbook3|WangWu|2010-01-15\n";
+        String actual = bookStore.printBookList();
         assertEquals(expect, actual);
     }
 
     @Test
     public void menu(){
         String expect = "[List Books]\t[Recent History]\t[Sign in]\t[Quit]";
-        String actual = bookStore.menu();
+        String actual = bookStore.displayMenu();
         assertEquals(expect,actual);
     }
 
@@ -58,6 +50,28 @@ public class BookStoreTest {
         assertEquals(expect,actual);
     }
 
+    @Test
+    public void successCheckoutResponse(){
+        String expect = "Thank you! Enjoy the book";
+        String actual = bookStore.checkOutBook("book1");
+        assertEquals(expect,actual);
+    }
 
+    @Test
+    public void failureCheckOutResponse(){
+        String expect = "That book is not available.";
+        String actual = bookStore.checkOutBook("book");
+        assertEquals(expect,actual);
+    }
+
+    @Test
+    public void checkoutIsAvailable(){
+        assertTrue(bookStore.isCheckOutAvailable("book2"));
+    }
+
+    @Test
+    public void checkOutFailure(){
+        assertFalse(bookStore.isCheckOutAvailable("book"));
+    }
 
 }
