@@ -6,12 +6,12 @@ import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static com.twu.biblioteca.Handle.readJsonFile;
+import static com.twu.biblioteca.UniversalUtilities.readJsonFile;
 
 
 public class BookStore {
     public static ArrayList<Book> books = new ArrayList<>();
-    public static String menuMessage;
+    public static String menuMessage = "[List Books]\t[Return Book]\t[Sign in]\t[Check Out]\t[Quit]";
     private String bookList;
     private String resourcePath;
     private int checkOutBookPositionInBooks;
@@ -22,7 +22,10 @@ public class BookStore {
         this.resourcePath = this.getClass().getResource("../../../").getPath() + "../src_resource/booklist.json";
         this.communicateWithConsole = new CommunicateWithConsole();
         this.loadBooks(readJsonFile(resourcePath));
-        this.displayMenu();
+    }
+
+    public void sayWelcome() {
+        communicateWithConsole.printWelcome();
     }
 
     public void loadBooks(String jsonBookList) {
@@ -44,9 +47,8 @@ public class BookStore {
         return bookList;
     }
 
-    public String displayMenu() {
-        menuMessage = "[List Books]\t[Return Book]\t[Sign in]\t[Check Out]\t[Quit]";
-        return menuMessage;
+    public void displayMenu() {
+        communicateWithConsole.printBookStoreMenu();
     }
 
     public boolean optionValidCheck(String inputOption) {
@@ -95,8 +97,8 @@ public class BookStore {
     }
 
     public boolean isReturnAvailable(String book) {
-        for (int i = 0; i<books.size(); i++){
-            if(books.get(i).name.equals(book) && !books.get(i).available){
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).name.equals(book) && !books.get(i).available) {
                 books.get(i).available = true;
                 return true;
             }
@@ -104,8 +106,8 @@ public class BookStore {
         return false;
     }
 
-    public String returnBook(String book){
-        if(this.isReturnAvailable(book))
+    public String returnBook(String book) {
+        if (this.isReturnAvailable(book))
             return "Thank you for returning the book.";
         else
             return "That is not a valid book to return.";

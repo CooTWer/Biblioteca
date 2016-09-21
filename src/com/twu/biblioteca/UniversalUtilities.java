@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Handle {
+public class UniversalUtilities {
     public static String jsonBookList = "";
 
     public static String readJsonFile(String jsonAddress) {
@@ -34,9 +34,9 @@ public class Handle {
         return jsonBookList;
     }
 
-    public static String getConsoleMessage(){
-        String read="";
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in ));
+    public static String getConsoleMessage() {
+        String read = "";
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         try {
             read = bufferedReader.readLine();
         } catch (IOException e) {

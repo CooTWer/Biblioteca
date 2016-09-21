@@ -1,28 +1,41 @@
 package com.twu.biblioteca;
 
 
-import static com.twu.biblioteca.Handle.getConsoleMessage;
+import static com.twu.biblioteca.BookStore.menuMessage;
+import static com.twu.biblioteca.UniversalUtilities.getConsoleMessage;
 
 public class CommunicateWithConsole {
 
-    public String printRequestForCheckOutBookName(){
+
+    public void printWelcome() {
+        System.out.println("Welcome to Bangalore Public Library");
+    }
+
+    public void printBookStoreMenu() {
+        System.out.println(menuMessage);
+    }
+
+    public String printRequestForCheckOutBookName() {
         System.out.println("Please enter the book you want to check out!");
         return getConsoleMessage();
     }
 
-    public String printRequestForReturnBookName(){
+    public String printRequestForReturnBookName() {
         System.out.println("Please enter the book you want to return");
         return getConsoleMessage();
     }
-    public void printFunctionNotComplete(){
+
+    public void printFunctionNotComplete() {
         System.out.println("Function hasn't finished!");
     }
 
-    public void printReturnSuccess(){
-        System.out.println("Thank you for returning the book.");
-    }
 
-    public void printReturnFailure(){
-        System.out.println("That is not a valid book to return.");
+    public void interactiveFunction(BookStore bookStore) {
+        String inputString = getConsoleMessage();
+        while (!inputString.equals("Quit")) {
+            System.out.println(bookStore.handleInputMessage(inputString));
+            bookStore.displayMenu();
+            inputString = getConsoleMessage();
+        }
     }
 }

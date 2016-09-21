@@ -16,12 +16,6 @@ public class BookStoreTest {
         assertEquals(expect, actual);
     }
 
-    @Test
-    public void menu(){
-        String expect = "[List Books]\t[Recent History]\t[Sign in]\t[Quit]";
-        String actual = bookStore.displayMenu();
-        assertEquals(expect,actual);
-    }
 
     @Test
     public void optionValidWrongCheck(){
@@ -76,7 +70,9 @@ public class BookStoreTest {
 
     @Test
     public void returnBookSuccess(){
+        bookStore.books.get(0).available = false;
         assertTrue(bookStore.isReturnAvailable("book1"));
+        bookStore.books.get(0).available = true;
     }
 
     @Test
