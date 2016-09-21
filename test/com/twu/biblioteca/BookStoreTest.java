@@ -74,4 +74,18 @@ public class BookStoreTest {
         assertFalse(bookStore.isCheckOutAvailable("book"));
     }
 
+    @Test
+    public void returnBookSuccess(){
+        assertTrue(bookStore.isReturnAvailable("book1"));
+    }
+
+    @Test
+    public void returnBookFailureForWrongName(){
+        assertFalse(bookStore.isReturnAvailable("book5"));
+    }
+
+    @Test
+    public void returnBookFailureForAvailableBook(){
+        assertFalse(bookStore.isReturnAvailable("book2"));
+    }
 }

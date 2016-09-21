@@ -12,7 +12,7 @@ import static com.twu.biblioteca.Handle.readJsonFile;
 public class BookStore {
     public static ArrayList<Book> books = new ArrayList<>();
     public static String menuMessage;
-    private String bookList ;
+    private String bookList;
     private String resourcePath;
     private int checkOutBookPositionInBooks;
     private CommunicateWithConsole communicateWithConsole;
@@ -25,7 +25,7 @@ public class BookStore {
         this.displayMenu();
     }
 
-    public void loadBooks(String jsonBookList){
+    public void loadBooks(String jsonBookList) {
         books.clear();
         JSONArray jsonArray = JSONArray.fromObject(jsonBookList);
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -36,15 +36,16 @@ public class BookStore {
     }
 
     public String printBookList() {
+        bookList = "";
         for (int i = 0; i < books.size(); i++) {
-            if(books.get(i).available)
+            if (books.get(i).available)
                 bookList += books.get(i).name + "|" + books.get(i).author + "|" + books.get(i).date + "\n";
         }
         return bookList;
     }
 
     public String displayMenu() {
-        menuMessage = "[List Books]\t[Recent History]\t[Sign in]\t[Check Out]\t[Quit]";
+        menuMessage = "[List Books]\t[Return Book]\t[Sign in]\t[Check Out]\t[Quit]";
         return menuMessage;
     }
 
@@ -58,11 +59,13 @@ public class BookStore {
 
     public String handleInputMessage(String inputOption) {
         if (this.optionValidCheck(inputOption)) {
-            switch (inputOption){
+            switch (inputOption) {
                 case "List Books":
                     return this.printBookList();
                 case "Check Out":
-                    return this.checkOutBook(communicateWithConsole.printAskForBookName());
+                    return this.checkOutBook(communicateWithConsole.printRequestForCheckOutBookName());
+                case "Return Book":
+                    return this.returnBook(communicateWithConsole.printRequestForReturnBookName());
                 default:
                     communicateWithConsole.printFunctionNotComplete();
                     return null;
@@ -76,19 +79,35 @@ public class BookStore {
         if (isCheckOutAvailable(book)) {
             books.get(this.checkOutBookPositionInBooks).available = false;
             return "Thank you! Enjoy the book";
-        }
-        else {
+        } else {
             return "That book is not available.";
         }
     }
 
     public boolean isCheckOutAvailable(String book) {
-        for (int i = 0; i < books.size(); i++){
-            if(books.get(i).name.equals(book)  && books.get(i).available){
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).name.equals(book) && books.get(i).available) {
                 this.checkOutBookPositionInBooks = i;
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean isReturnAvailable(String book) {
+        for (int i = 0; i<books.size(); i++){
+            if(books.get(i).name.equals(book) && !books.get(i).available){
+                books.get(i).available = true;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String returnBook(String book){
+        if(this.isReturnAvailable(book))
+            return "Thank you for returning the book.";
+        else
+            return "That is not a valid book to return.";
     }
 }
