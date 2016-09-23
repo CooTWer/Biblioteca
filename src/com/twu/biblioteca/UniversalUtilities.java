@@ -6,10 +6,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
 public class UniversalUtilities {
     public static String jsonBookList = "";
 
     public static String readJsonFile(String jsonAddress) {
+        jsonBookList = "";
         BufferedReader reader = null;
         try {
             FileInputStream fileInputStream = new FileInputStream(jsonAddress);
@@ -44,4 +46,6 @@ public class UniversalUtilities {
         }
         return read;
     }
+
+
 }

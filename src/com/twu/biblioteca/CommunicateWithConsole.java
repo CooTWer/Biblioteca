@@ -20,6 +20,11 @@ public class CommunicateWithConsole {
         return getConsoleMessage();
     }
 
+    public String printRequestForCheckOutMovieName() {
+        System.out.println("Please enter the movie you want to check out!");
+        return getConsoleMessage();
+    }
+
     public String printRequestForReturnBookName() {
         System.out.println("Please enter the book you want to return");
         return getConsoleMessage();

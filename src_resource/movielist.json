@@ -1,0 +1,74 @@
+[
+  {
+    "name": "movie1",
+    "year": "2012",
+    "director": "director1",
+    "rate": "2"
+  },
+  {
+    "name": "movie2",
+    "year": "2011",
+    "director": "director2",
+    "rate": "1"
+  },
+  {
+    "name": "movie3",
+    "year": "2013",
+    "director": "director1",
+    "rate": "5"
+  },
+  {
+    "name": "movie4",
+    "year": "1999",
+    "director": "director5",
+    "rate": "10"
+  },
+  {
+    "name": "movie5",
+    "year": "1996",
+    "director": "director6",
+    "rate": "3"
+  },
+  {
+    "name": "movie6",
+    "year": "2000",
+    "director": "director10",
+    "rate": "4"
+  },
+  {
+    "name": "movie7",
+    "year": "2012",
+    "director": "director7",
+    "rate": "8"
+  },
+  {
+    "name": "movie8",
+    "year": "2016",
+    "director": "director1",
+    "rate": "7"
+  },
+  {
+    "name": "movie9",
+    "year": "1992",
+    "director": "director3",
+    "rate": "9"
+  },
+  {
+    "name": "movie10",
+    "year": "2014",
+    "director": "director1",
+    "rate": "6"
+  },
+  {
+    "name": "movie11",
+    "year": "2008",
+    "director": "director5",
+    "rate": "11"
+  },
+  {
+    "name": "movie12",
+    "year": "2002",
+    "director": "director15",
+    "rate": "12"
+  }
+]

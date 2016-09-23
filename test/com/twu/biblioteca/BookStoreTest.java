@@ -59,13 +59,13 @@ public class BookStoreTest {
     }
 
     @Test
-    public void checkoutIsAvailable(){
-        assertTrue(bookStore.isCheckOutAvailable("book2"));
+    public void checkoutBookIsAvailable(){
+        assertTrue(bookStore.isCheckOutBookAvailable("book2"));
     }
 
     @Test
     public void checkOutFailure(){
-        assertFalse(bookStore.isCheckOutAvailable("book"));
+        assertFalse(bookStore.isCheckOutBookAvailable("book"));
     }
 
     @Test
