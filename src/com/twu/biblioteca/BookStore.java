@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 
 import com.twu.biblioteca.movie.Movie;
+import com.twu.biblioteca.user.User;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -16,22 +17,28 @@ import static com.twu.biblioteca.UniversalUtilities.readJsonFile;
 
 public class BookStore {
     public static ArrayList<Book> books = new ArrayList<>();
+    public static ArrayList<User> users = new ArrayList<>();
     public static Map<String, Movie> movies = new HashMap<>();
-    public static String menuMessage = "[List Books]\t[List Movies]\t[Return Book]\t[Sign in]\t[Check Out Book]\t[Check Out Movie]\t[Quit]";
+    public static String menuMessage = "[List Books]\t[List Movies]\t[Return Book]\t[Sign in]\t[Check Out Book]\t[Check Out Movie]\t[Login]\t[Quit]";
 
     private String bookList;
     private String resourcePathBooks;
     private String resourcePathMovies;
+    private String resourcePathUser;
     private int checkOutBookPositionInBooks;
     private CommunicateWithConsole communicateWithConsole;
+    private boolean loginFlag;
 
     public BookStore() {
         this.bookList = "";
         this.resourcePathBooks = this.getClass().getResource("../../../").getPath() + "../src_resource/booklist.json";
         this.resourcePathMovies = this.getClass().getResource("../../../").getPath() + "../src_resource/movielist.json";
+        this.resourcePathUser = this.getClass().getResource("../../../").getPath() + "../src_resource/userInformation.json";
         this.communicateWithConsole = new CommunicateWithConsole();
+        this.loginFlag = false;
         this.loadBooks(readJsonFile(resourcePathBooks));
         this.loadMovies(readJsonFile(resourcePathMovies));
+        this.loadUsers(readJsonFile(resourcePathUser));
     }
 
     public void sayWelcome() {
@@ -45,6 +52,16 @@ public class BookStore {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             Book book = new Book(jsonObject.get("book_name").toString(), jsonObject.get("Author").toString(), jsonObject.get("Time").toString());
             books.add(book);
+        }
+    }
+
+    public void loadUsers(String jsonUserList) {
+        users.clear();
+        JSONArray jsonArray = JSONArray.fromObject(jsonUserList);
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            User user = new User(jsonObject.get("UserName").toString(), jsonObject.get("EmailAddress").toString(), jsonObject.get("PhoneNumber").toString(),jsonObject.get("Id").toString(),jsonObject.get("PassWord").toString());
+            users.add(user);
         }
     }
 
@@ -102,13 +119,21 @@ public class BookStore {
                 case "List Books":
                     return this.printBookList();
                 case "Check Out Book":
+                    if(!isLogin())
+                        return "Please login first";
                     return this.checkOutBook(communicateWithConsole.printRequestForCheckOutBookName());
                 case "Return Book":
+                    if(!isLogin())
+                        return "Please login first";
                     return this.returnBook(communicateWithConsole.printRequestForReturnBookName());
                 case "List Movies":
                     return this.printMovieList();
                 case "Check Out Movie":
+                    if(!isLogin())
+                        return "Please login first";
                     return this.checkOutMovie(communicateWithConsole.printRequestForCheckOutMovieName());
+                case "Login":
+                    return this.login();
                 default:
                     communicateWithConsole.printFunctionNotComplete();
                     return null;
@@ -148,8 +173,6 @@ public class BookStore {
 
     public boolean isCheckOutMovieAvailable(String movie) {
         for (Movie entry : movies.values()) {
-            String aa = entry.getName();
-            boolean k = entry.getAvailable();
             if (entry.getName().equals(movie) && entry.getAvailable()) {
                 entry.setAvailable(false);
                 return true;
@@ -173,5 +196,22 @@ public class BookStore {
             return "Thank you for returning the book.";
         else
             return "That is not a valid book to return.";
+    }
+
+    public boolean isLogin(){
+        return loginFlag;
+    }
+
+    public String login(){
+        String inputId = communicateWithConsole.printRequestForUserId();
+        String inputPwd = communicateWithConsole.printRequestForUserPwd();
+        for (User user : users){
+            if (user.getLibraryId().equals(inputId) && user.getLibraryPwd().equals(inputPwd)){
+                loginFlag = true;
+                return "login success";
+            }
+        }
+        loginFlag = false;
+        return "Please check your username or password";
     }
 }

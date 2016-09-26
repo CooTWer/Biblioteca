@@ -43,4 +43,14 @@ public class CommunicateWithConsole {
             inputString = getConsoleMessage();
         }
     }
+
+    public String printRequestForUserId() {
+        System.out.println("Please input your Id!");
+        return getConsoleMessage();
+    }
+
+    public String printRequestForUserPwd(){
+        System.out.println("Please input your PassWord!");
+        return getConsoleMessage();
+    }
 }
