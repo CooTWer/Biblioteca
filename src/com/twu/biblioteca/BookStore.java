@@ -19,7 +19,7 @@ public class BookStore {
     public static ArrayList<Book> books = new ArrayList<>();
     public static ArrayList<User> users = new ArrayList<>();
     public static Map<String, Movie> movies = new HashMap<>();
-    public static String menuMessage = "[List Books]\t[List Movies]\t[Return Book]\t[Sign in]\t[Check Out Book]\t[Check Out Movie]\t[Login]\t[Quit]";
+    public static String menuMessage = "[List Books]\t[List Movies]\t[Return Book]\t[Sign in]\t[Check Out Book]\t[Check Out Movie]\t[Login]\t[Profile]\t[Quit]";
 
     private String bookList;
     private String resourcePathBooks;
@@ -28,6 +28,7 @@ public class BookStore {
     private int checkOutBookPositionInBooks;
     private CommunicateWithConsole communicateWithConsole;
     private boolean loginFlag;
+    private String currentUserId;
 
     public BookStore() {
         this.bookList = "";
@@ -134,6 +135,10 @@ public class BookStore {
                     return this.checkOutMovie(communicateWithConsole.printRequestForCheckOutMovieName());
                 case "Login":
                     return this.login();
+                case "Profile":
+                    if(!isLogin())
+                        return "Please login first";
+                    return this.showProfile();
                 default:
                     communicateWithConsole.printFunctionNotComplete();
                     return null;
@@ -208,10 +213,21 @@ public class BookStore {
         for (User user : users){
             if (user.getLibraryId().equals(inputId) && user.getLibraryPwd().equals(inputPwd)){
                 loginFlag = true;
+                currentUserId = inputId;
                 return "login success";
             }
         }
         loginFlag = false;
         return "Please check your username or password";
+    }
+
+    public String showProfile(){
+        String profile = "";
+        for (User user : users){
+            if (user.getLibraryId().equals(currentUserId)){
+                profile += "Name : "+user.getUserName() + "\n" + "Email : "+user.getEmailAddress() + "\n" + "Phone : " + user.getPhoneNumber();
+            }
+        }
+        return profile;
     }
 }
